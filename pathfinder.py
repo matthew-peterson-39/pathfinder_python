@@ -1,6 +1,7 @@
 import sys
 import pygame
 from queue import PriorityQueue, Queue
+from algorithms import dfs
 
 WIDTH = 800
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
@@ -192,47 +193,6 @@ def astar_algo(draw, grid, start, end):
 
         if current != start:
             current.make_closed()
-
-def dfs_algo(draw, start, end):
-    """
-    Implements Depth First Search (DFS) to find a path from a start node to an end node.
-
-    DFS explores as far down a branch as possible before backtracking. This version of DFS 
-    goes to the end of a branch, then backtracks, checking other branches from the visited 
-    nodes. It uses a stack to keep track of which nodes to visit next.
-
-    Params:
-    draw (function): Function to update the GUI.
-    start (Node): The starting point of the search.
-    end (Node): The target node to find.
-
-    Returns:
-        bool: True if a path to the end node is found, False if there's no path.
-    """
-   
-    stack = [start]
-    visited = set()
-
-    while stack:
-        current = stack.pop()
-        visited.add(current)
-
-        if current == end:
-            #TODO visualize path
-            return True
-        
-        for neighbor in current.neighbors:
-            if neighbor not in visited:
-                stack.append(neighbor)
-                if neighbor != end:
-                    neighbor.make_open()
-
-        draw()  # Redraw the grid with updated nodes
-
-        if current != start:
-            current.make_closed()  # Mark the current node as visited/closed in visualization
-
-    return False
 
 def bfs_algo(draw, start, end):
     """
@@ -453,7 +413,7 @@ def main(WIN, width):
                     if algo_type == "astar":
                         astar_algo(lambda: draw(WIN, grid, ROWS, width), grid, start, end)
                     elif algo_type == "dfs":
-                        dfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
+                        dfs.dfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
                     elif algo_type == "bfs":
                         bfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
                     elif algo_type == "bi_bfs":
