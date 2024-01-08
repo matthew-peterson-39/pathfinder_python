@@ -1,5 +1,6 @@
+import sys
 import pygame
-from queue import PriorityQueue
+from queue import PriorityQueue, Queue
 
 WIDTH = 800
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
@@ -199,12 +200,6 @@ def dfs_algo(draw, start, end):
     while stack:
         current = stack.pop()
         visited.add(current)
-
-        if current == end:
-            # Found the end node, perform necessary actions
-            # like reconstructing the path and visualizing it.
-            return True
-
         for neighbor in current.neighbors:
             if neighbor not in visited:
                 stack.append(neighbor)
@@ -214,6 +209,31 @@ def dfs_algo(draw, start, end):
         if current != start:
             current.make_closed()  # Mark the current node as visited/closed in visualization
 
+    return False
+
+def bfs_algo(draw, start, end):
+    queue = Queue()
+    visited = set()
+
+    queue.put(start)
+    visited.add(start)
+
+    while not queue.empty():
+        current = queue.get()
+        if current == end:
+            return True
+        
+        for neighbor in current.neighbors:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.put(neighbor)
+                neighbor.previous_node = current
+            
+        draw()
+
+        if current != start:
+            current.make_closed()
+    
     return False
 
 def make_grid(rows, width):
@@ -231,7 +251,7 @@ def draw_grid(WIN, rows, width):
     for i in range(rows):
         pygame.draw.line(WIN, GREY, (0,i * gap), (width, i * gap))
         for j in range(rows):
-            pygame.draw.line(WIN, GREY, (j * gap, 0), (j * gap, width)) #flip cords and draw ver
+            pygame.draw.line(WIN, GREY, (j * gap, 0), (j * gap, width)) #flip cords and draw vert borders
 
 def draw(WIN, grid, rows, width):
     WIN.fill(WHITE)
@@ -253,6 +273,7 @@ def get_clicked_pos(pos, rows, width):
     return row, col
 
 def main(WIN, width):
+    algo_type = sys.argv[1] if len(sys.argv) > 1 else "astar" # default astar
     ROWS = 50
     grid = make_grid(ROWS, width)
     
@@ -298,7 +319,8 @@ def main(WIN, width):
                         for node in row:
                             node.update_neighbors(grid)
                     # astar_algo(lambda: draw(WIN, grid, ROWS, width), grid, start, end)
-                    dfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
+                    # dfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
+                    bfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
                 if event.key == pygame.K_c:
                     start = None
                     end = None
