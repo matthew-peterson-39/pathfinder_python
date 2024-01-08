@@ -47,7 +47,7 @@ class Node:
         return self.color == BLUE
 
     def is_end(self):
-        return self.color == TURQUOISE
+        return self.color == YELLOW
     
     def reset(self):
         self.color = WHITE
@@ -68,7 +68,7 @@ class Node:
         self.color = ORANGE
     
     def make_end(self):
-        self.color = TURQUOISE
+        self.color = YELLOW
     
     def draw(self, WIN):
         pygame.draw.rect(WIN, self.color, (self.x, self.y, self.width, self.width))
@@ -202,13 +202,14 @@ def dfs_algo(draw, start, end):
         visited.add(current)
 
         if current == end:
-            # Found the end node, perform necessary actions
-            # like reconstructing the path and visualizing it.
+            #TODO visualize path
             return True
         
         for neighbor in current.neighbors:
             if neighbor not in visited:
                 stack.append(neighbor)
+                if neighbor != end:
+                    neighbor.make_open()
 
         draw()  # Redraw the grid with updated nodes
 
@@ -227,10 +228,13 @@ def bfs_algo(draw, start, end):
     while not queue.empty():
         current = queue.get()
         if current == end:
+            #TODO visualize path
             return True
         
         for neighbor in current.neighbors:
             if neighbor not in visited:
+                if neighbor != end:
+                    neighbor.make_open()
                 visited.add(neighbor)
                 queue.put(neighbor)
                 neighbor.previous_node = current
