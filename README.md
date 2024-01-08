@@ -10,6 +10,7 @@ A pygame based pathfinding visualizer where users can design a maze and watch th
 
 # Future Algorithms I want to Explore
 - Swarm Algorithm
+- Dijkstra's Algorithm
 
 # Controls
 ### Left-click: 
