@@ -150,13 +150,16 @@ def astar_algo(draw, grid, start, end):
     
     previous_node = {}
     
+    # set initial g_score for all nodes
     g_score = {node: float("inf") for row in grid for node in row}  #dictionary comprehension
     g_score[start] = 0
     
+    # set initial f_score for all nodes
     f_score = {node: float("inf") for row in grid for node in row}  #dictionary comprehension
+    # calculate f_score using heuristic (manhattan distance) between the start and end node
     f_score[start] = calculate_heuristic(start.get_pos(), end.get_pos())
 
-    open_set_hash = {start}
+    open_set_hash = {start}     # faster open_set look up. 
 
     while not open_set.empty():
         for event in pygame.event.get():
@@ -188,6 +191,30 @@ def astar_algo(draw, grid, start, end):
 
         if current != start:
             current.make_closed()
+
+def dfs_algo(draw, start, end):
+    stack = [start]
+    visited = set()
+
+    while stack:
+        current = stack.pop()
+        visited.add(current)
+
+        if current == end:
+            # Found the end node, perform necessary actions
+            # like reconstructing the path and visualizing it.
+            return True
+
+        for neighbor in current.neighbors:
+            if neighbor not in visited:
+                stack.append(neighbor)
+
+        draw()  # Redraw the grid with updated nodes
+
+        if current != start:
+            current.make_closed()  # Mark the current node as visited/closed in visualization
+
+    return False
 
 def make_grid(rows, width):
     grid = []
@@ -240,8 +267,6 @@ def main(WIN, width):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-            # if start:   #ensure the user cannot press inputs when algorithm has started
-            #     continue
 
             if pygame.mouse.get_pressed()[0]:   #left mouse button
                 pos = pygame.mouse.get_pos()
@@ -272,7 +297,8 @@ def main(WIN, width):
                     for row in grid:
                         for node in row:
                             node.update_neighbors(grid)
-                    astar_algo(lambda: draw(WIN, grid, ROWS, width), grid, start, end)
+                    # astar_algo(lambda: draw(WIN, grid, ROWS, width), grid, start, end)
+                    dfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
                 if event.key == pygame.K_c:
                     start = None
                     end = None
