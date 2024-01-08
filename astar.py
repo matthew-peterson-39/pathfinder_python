@@ -3,7 +3,7 @@ from queue import PriorityQueue
 
 WIDTH = 800
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
-pygame.display.set_caption("Pathfinding Visualizer")
+pygame.display.set_caption("A* Visualizer")
 
 BLACK = (0,0,0)
 WHITE = (255,255,255)
