@@ -1,5 +1,5 @@
 # Pathfinding with Python
-A pygame based pathfinding visualizer where users can design a maze and watch the algorithm work it out. The current version implements only one algorithm, A*, but the ability to select and visualize different algorithms will be available soon!
+A pygame based pathfinding visualizer where users can design a maze and watch the algorithm work it out. The current version works on an unweighted graph, where all node edges have the same value. In the future, I want to implement different weights for more maze building options.
 
 # Implemented Algorithms
 - A*
@@ -26,7 +26,7 @@ A pygame based pathfinding visualizer where users can design a maze and watch th
 # How to Run
 
 ## NOTICE:
-WSL users may experience difficulties running the program depending on their version of Windows.
+WSL users who's version of windows is < X11 may experience difficulties running the program.
 Vist https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps for additional details.
 
 ## Requirements
