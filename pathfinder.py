@@ -194,7 +194,7 @@ def astar_algo(draw, grid, start, end):
             current.make_closed()
 
 def dfs_algo(draw, start, end):
-   """
+    """
     Implements Depth First Search (DFS) to find a path from a start node to an end node.
 
     DFS explores as far down a branch as possible before backtracking. This version of DFS 
@@ -207,10 +207,9 @@ def dfs_algo(draw, start, end):
     end (Node): The target node to find.
 
     Returns:
-    bool: True if a path to the end node is found, False if there's no path.
+        bool: True if a path to the end node is found, False if there's no path.
     """
-    print(start.y)
-    print(end.y)
+   
     stack = [start]
     visited = set()
 
