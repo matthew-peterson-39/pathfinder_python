@@ -279,6 +279,52 @@ def bfs_algo(draw, start, end):
     
     return False
 
+def bidirectional_bfs(draw, start, end):
+
+    # initialize start and end locations
+    start_queue = Queue()
+    visited_start = set()
+    
+    end_queue = Queue()
+    visited_end = set()
+
+    start_queue.put(start)
+    end_queue.put(end)
+
+    visited_start.add(start)
+    visited_end.add(end)
+    
+
+    while not start_queue.empty() and not end_queue.empty():
+        current_start = start_queue.get()
+        current_end = end_queue.get()
+
+        # check if the paths have met
+        if current_start == current_end or \
+            current_start in visited_end or \
+            current_end in visited_start:
+            
+            return True
+            
+        for neighbor in current_start.neighbors:
+            if neighbor not in visited_start:
+                visited_start.add(neighbor)
+                start_queue.put(neighbor)
+                neighbor.make_open()
+
+        for neighbor in current_end.neighbors:
+            if neighbor not in visited_end:
+                visited_end.add(neighbor)
+                end_queue.put(neighbor)
+                neighbor.make_open()
+        
+        draw()
+
+        if current_start != start:
+            current_start.make_closed()
+        if current_end != end:
+            current_end.make_closed()
+
 def make_grid(rows, width):
     grid = []
     gap = width // rows     #int division
@@ -367,6 +413,8 @@ def main(WIN, width):
                         dfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
                     elif algo_type == "bfs":
                         bfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
+                    elif algo_type == "bi_bfs":
+                        bidirectional_bfs(lambda: draw(WIN, grid, ROWS, width), start, end)
                 if event.key == pygame.K_c:
                     start = None
                     end = None
