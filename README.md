@@ -7,10 +7,10 @@ A pygame based pathfinding visualizer where users can design a maze and watch th
 - BFS
 - Bidirectional BFS
 - Bidirectional DFS
+- Dijkstra's Algorithm
 
 # Future Algorithms I want to Explore
 - Swarm Algorithm
-- Dijkstra's Algorithm
 
 # Controls
 ### Left-click: 
@@ -78,6 +78,7 @@ pip install -r requirements.txt
 3. bfs
 4. bi_bfs
 5. bi_dfs
+6. dijkstras
 
 ```bash
 python3 pathfinder.py <algo_type>
