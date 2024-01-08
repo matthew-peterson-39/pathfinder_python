@@ -35,7 +35,8 @@ def bidirectional_dfs(draw, start, end):
 
         if start_current != start:
             start_current.make_closed()
-        if start_current != start:
-            start_current.make_closed()
+        
+        if end_current != end:
+            end_current.make_closed()
 
     return False
