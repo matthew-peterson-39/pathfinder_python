@@ -1,4 +1,5 @@
 import pygame
+import math
 from queue import PriorityQueue
 
 WIDTH = 800
@@ -45,11 +46,17 @@ class Node:
     def is_start(self):
         return self.color == ORANGE
     
+    def is_path(self):
+        return self.color == BLUE
+
     def is_end(self):
         return self.color == TURQUOISE
     
     def reset(self):
         self.color = WHITE
+    
+    def make_path(self):
+        self.color = BLUE
 
     def make_closed(self):
         self.color = RED
@@ -92,16 +99,55 @@ def heuristic(node1, node2):
     x2, y2 = node2
     return abs(x1 - x2) + abs(y1 - y2)
 
+def visualize_path(previous_node, current, draw):
+    while current in previous_node:
+        current = previous_node[current]
+        current.make_path()
+        draw()
+
 def astar_algo(draw, grid, start, end):
     count = 0
     open_set = PriorityQueue()
     open_set.put((0, count, start))  # count for breaking f-score ties
     previous_node = {}
-    g_score = {node: float("inf") for row in grid for spot in row}  #dictionary comprehension
+    g_score = {node: float("inf") for row in grid for node in row}  #dictionary comprehension
     g_score[start] = 0
-    f_score = {node: float("inf") for row in grid for spot in row}  #dictionary comprehension
+    f_score = {node: float("inf") for row in grid for node in row}  #dictionary comprehension
     f_score[start] = heuristic(start.get_pos(), end.get_pos())
-    
+
+    open_set_hash = {start}
+
+    while not open_set.empty():
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+        
+        current = open_set.get()[2]
+        open_set_hash.remove(current)
+
+        if current == end:
+            # draw path
+            visualize_path(previous_node, end, draw)
+            end.make_end()
+            return True
+
+        for neighbor in current.neighbors:
+            temp_g_score = g_score[current] + 1
+            
+            if temp_g_score < g_score[neighbor]:
+                previous_node[neighbor] = current
+                g_score[neighbor] = temp_g_score
+                f_score[neighbor] = temp_g_score + heuristic(neighbor.get_pos(), end.get_pos())
+                if neighbor not in open_set_hash:
+                    count += 1
+                    open_set.put((f_score[neighbor], count, neighbor))
+                    open_set_hash.add(neighbor)
+                    neighbor.make_open()
+        draw()
+
+        if current != start:
+            current.make_closed()
+
 def make_grid(rows, width):
     grid = []
     gap = width // rows     #int division
@@ -137,7 +183,6 @@ def get_clicked_pos(pos, rows, width):
     col = x // gap
 
     return row, col
-
 
 def main(WIN, width):
     ROWS = 50
@@ -185,9 +230,12 @@ def main(WIN, width):
                 if event.key == pygame.K_SPACE and not started:
                     for row in grid:
                         for node in row:
-                            node.update_neighbors()
+                            node.update_neighbors(grid)
                     astar_algo(lambda: draw(WIN, grid, ROWS, width), grid, start, end)
-
+                if event.key == pygame.K_c:
+                    start = None
+                    end = None
+                    grid = make_grid(ROWS, width)
     pygame.quit()
 
 main(WIN, WIDTH)
