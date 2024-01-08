@@ -21,6 +21,10 @@ A pygame based pathfinding visualizer where users can design a maze and watch th
 
 # How to Run
 
+## NOTICE:
+WSL users may experience difficulties running the program depending on their version of Windows.
+Vist https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps for additional details.
+
 ### Requirements
 - Python 3
 - Git
