@@ -30,4 +30,55 @@ class Node:
         self.neighbors = []
         self.width = width
         self.total_rows = total_rows
-        
+    
+    def get_pos(self):
+        return self.row, self.col
+    
+    def is_closed(self):
+        return self.color == RED
+    
+    def is_open(self):
+        return self.color == GREEN
+    
+    def is_wall(self):
+        return self.color == BLACK
+
+    def is_start(self):
+        return self.color == ORANGE
+    
+    def is_end(self):
+        return self.color == TURQUOISE
+    
+    def reset(self):
+        self.color == WHITE
+
+    def make_closed(self):
+        return self.color == RED
+    
+    def make_open(self):
+        return self.color == GREEN
+    
+    def make_wall(self):
+        return self.color == BLACK
+
+    def make_start(self):
+        return self.color == ORANGE
+    
+    def make_end(self):
+        return self.color == TURQUOISE
+    
+    def draw(self, WIN):
+        pygame.draw.rect(WIN, self.color, (self.x, self.y, self.width, self.width))
+    
+    def update_neighbors(self, grid):
+        pass
+
+    # LESS THAN ... if two nodes are compared, the other spot will always be less than
+    def __let__(self, other):
+        return False
+    
+def heuristic(node1, node2):
+    x1, y1 = node1
+    x2, y2 = node2
+    return abs(x1 - x2) + abs(y1 - y2)
+
