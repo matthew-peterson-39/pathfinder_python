@@ -1,96 +1,12 @@
 import sys
 import pygame
+import Node
 from algorithms import dfs, bfs, bi_bfs, bi_dfs, dijkstras, astar
 
 WIDTH = 800
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
 pygame.mouse.set_cursor(*pygame.cursors.arrow)
 pygame.display.set_caption("Pathfinding Visualizer")
-
-BLACK = (96, 96, 96)
-WHITE = (255, 255, 255)
-RED = (255, 102, 102)
-GREEN = (102, 255, 102)
-BLUE = (102, 102, 255)
-YELLOW = (255, 255, 102)
-ORANGE = (255, 178, 102)
-GREY = (160, 160, 160)
-TURQUOISE = (102, 208, 204)
-PURPLE = (204, 102, 255)
-
-class Node:
-    def __init__(self, row, col, width, total_rows):
-        self.row = row
-        self.col = col
-        self.x = row * width
-        self.y = col * width
-        self.color = WHITE
-        self.neighbors = []
-        self.width = width
-        self.total_rows = total_rows
-    
-    def get_pos(self):
-        return self.row, self.col
-    
-    def is_closed(self):
-        return self.color == RED
-    
-    def is_open(self):
-        return self.color == GREEN
-    
-    def is_wall(self):
-        return self.color == BLACK
-
-    def is_start(self):
-        return self.color == PURPLE
-    
-    def is_path(self):
-        return self.color == BLUE
-
-    def is_end(self):
-        return self.color == ORANGE
-    
-    def reset(self):
-        self.color = WHITE
-    
-    def make_path(self):
-        self.color = BLUE
-
-    def make_closed(self):
-        self.color = RED
-    
-    def make_open(self):
-        self.color = GREEN
-    
-    def make_wall(self):
-        self.color = BLACK
-
-    def make_start(self):
-        self.color = ORANGE
-    
-    def make_end(self):
-        self.color = YELLOW
-    
-    def draw(self, WIN):
-        pygame.draw.rect(WIN, self.color, (self.x, self.y, self.width, self.width))
-    
-    def update_neighbors(self, grid):
-        self.neighbors = []
-        if self.row < self.total_rows - 1 and not grid[self.row+1][self.col].is_wall(): # DOWN
-            self.neighbors.append(grid[self.row+1][self.col])
-        
-        if self.row > 0 and not grid[self.row-1][self.col].is_wall(): # UP
-            self.neighbors.append(grid[self.row-1][self.col])            
-        
-        if self.col < self.total_rows - 1 and not grid[self.row][self.col+1].is_wall(): # RIGHT
-            self.neighbors.append(grid[self.row][self.col+1])
-        
-        if self.col > 0 and not grid[self.row][self.col-1].is_wall(): # LEFT
-            self.neighbors.append(grid[self.row][self.col-1])
-
-    # LESS THAN ... if two nodes are compared, the other spot will always be less than
-    def __lt__(self, other):
-        return False
  
 def make_grid(rows, width):
     grid = []
@@ -98,19 +14,19 @@ def make_grid(rows, width):
     for i in range(rows):
         grid.append([])
         for j in range(rows):
-            node = Node(i, j, gap, rows)
+            node = Node.Node(i, j, gap, rows)
             grid[i].append(node)
     return grid
 
 def draw_grid(WIN, rows, width):
     gap = width // rows
     for i in range(rows):
-        pygame.draw.line(WIN, GREY, (0,i * gap), (width, i * gap))
+        pygame.draw.line(WIN, Node.GREY, (0,i * gap), (width, i * gap))
         for j in range(rows):
-            pygame.draw.line(WIN, GREY, (j * gap, 0), (j * gap, width)) #flip cords and draw vert borders
+            pygame.draw.line(WIN, Node.GREY, (j * gap, 0), (j * gap, width)) #flip cords and draw vert borders
 
 def draw(WIN, grid, rows, width):
-    WIN.fill(WHITE)
+    WIN.fill(Node.WHITE)
 
     for row in grid:
         for node in row:
