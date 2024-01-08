@@ -25,17 +25,17 @@ A pygame based pathfinding visualizer where users can design a maze and watch th
 WSL users may experience difficulties running the program depending on their version of Windows.
 Vist https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps for additional details.
 
-### Requirements
+## Requirements
 - Python 3
 - Git
 - Virtual Enviornmet (optional)
 
-### Clone Repo
+## Clone Repo
 ```bash
 git clone https://github.com/matthew-peterson-39/pathfinder_python 
 ```
 
-### Setup Virtual Envionrment
+## Setup Virtual Envionrment
 
 Change directories into cloned repo
 ```bash 
@@ -59,7 +59,7 @@ Windows :
 source .venv/Scripts/activate
 ```
 
-### Install dependencies
+## Install dependencies
 
 ```bash
 pip install -r requirements.txt
