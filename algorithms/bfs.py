@@ -1,22 +1,23 @@
-"""
-BFS WIKIPEDIA PSUEDOCODE:
-1  procedure BFS(G, root) is
-2      let Q be a queue
-3      label root as explored
-4      Q.enqueue(root)
-5      while Q is not empty do
-6          v := Q.dequeue()
-7          if v is the goal then
-8              return v
-9          for all edges from v to w in G.adjacentEdges(v) do
-10              if w is not labeled as explored then
-11                  label w as explored
-12                  w.parent := v
-13                  Q.enqueue(w)
-"""
 from queue import Queue
 
 def bfs_algo(draw, start, end):
+    """
+    Implements the Breadth First Search (BFS) algorithm to find a path from a start 
+    node to an end node.
+
+    BFS works level by level, first checking all neighbors of the start node, then moving
+      to the next level of neighbors if the end node isn't found. It uses a queue to keep 
+      track of which nodes to visit next. The function ends when it either finds the end 
+      node or runs out of nodes to check.
+
+    Params:
+    draw (function): Function to update the GUI.
+    start (Node): The starting point of the search.
+    end (Node): The target node to find.
+
+    Returns:
+    bool: True if a path to the end node is found, False if there's no path.
+    """
     queue = Queue()
     visited = set()
 
@@ -26,10 +27,13 @@ def bfs_algo(draw, start, end):
     while not queue.empty():
         current = queue.get()
         if current == end:
+            #TODO visualize path
             return True
         
         for neighbor in current.neighbors:
             if neighbor not in visited:
+                if neighbor != end:
+                    neighbor.make_open()
                 visited.add(neighbor)
                 queue.put(neighbor)
                 neighbor.previous_node = current

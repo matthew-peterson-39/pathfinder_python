@@ -1,7 +1,7 @@
 import sys
 import pygame
 from queue import PriorityQueue, Queue
-from algorithms import dfs
+from algorithms import dfs, bfs, bi_bfs, bi_dfs
 
 WIDTH = 800
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
@@ -194,140 +194,6 @@ def astar_algo(draw, grid, start, end):
         if current != start:
             current.make_closed()
 
-def bfs_algo(draw, start, end):
-    """
-    Implements the Breadth First Search (BFS) algorithm to find a path from a start 
-    node to an end node.
-
-    BFS works level by level, first checking all neighbors of the start node, then moving
-      to the next level of neighbors if the end node isn't found. It uses a queue to keep 
-      track of which nodes to visit next. The function ends when it either finds the end 
-      node or runs out of nodes to check.
-
-    Params:
-    draw (function): Function to update the GUI.
-    start (Node): The starting point of the search.
-    end (Node): The target node to find.
-
-    Returns:
-    bool: True if a path to the end node is found, False if there's no path.
-    """
-    queue = Queue()
-    visited = set()
-
-    queue.put(start)
-    visited.add(start)
-
-    while not queue.empty():
-        current = queue.get()
-        if current == end:
-            #TODO visualize path
-            return True
-        
-        for neighbor in current.neighbors:
-            if neighbor not in visited:
-                if neighbor != end:
-                    neighbor.make_open()
-                visited.add(neighbor)
-                queue.put(neighbor)
-                neighbor.previous_node = current
-            
-        draw()
-
-        if current != start:
-            current.make_closed()
-    
-    return False
-
-def bidirectional_bfs_algo(draw, start, end):
-
-    # initialize start and end locations
-    start_queue = Queue()
-    visited_start = set()
-    
-    end_queue = Queue()
-    visited_end = set()
-
-    start_queue.put(start)
-    end_queue.put(end)
-
-    visited_start.add(start)
-    visited_end.add(end)
-    
-
-    while not start_queue.empty() and not end_queue.empty():
-        current_start = start_queue.get()
-        current_end = end_queue.get()
-
-        # check if the paths have met
-        if current_start == current_end or \
-            current_start in visited_end or \
-            current_end in visited_start:
-            
-            return True
-            
-        for neighbor in current_start.neighbors:
-            if neighbor not in visited_start:
-                visited_start.add(neighbor)
-                start_queue.put(neighbor)
-                neighbor.make_open()
-
-        for neighbor in current_end.neighbors:
-            if neighbor not in visited_end:
-                visited_end.add(neighbor)
-                end_queue.put(neighbor)
-                neighbor.make_open()
-        
-        draw()
-
-        if current_start != start:
-            current_start.make_closed()
-        if current_end != end:
-            current_end.make_closed()
-
-def bidirectional_dfs_algo(draw, start, end):
-    start_stack = [start]
-    start_visited = set()
-
-    end_stack = [end]
-    end_visited = set()
-    
-
-    while start_stack and end_stack:
-        start_current = start_stack.pop()
-        start_visited.add(start_current)
-
-        end_current = end_stack.pop()
-        end_visited.add(end_current)
-
-        if start_current == end_current or \
-            start_current in end_stack or \
-            end_current in start_stack:
-            #TODO visualize path
-            return True
-        
-        for neighbor in start_current.neighbors:
-            if neighbor not in start_visited:
-                start_stack.append(neighbor)
-                if neighbor != end_current:
-                    neighbor.make_open()
-        
-        for neighbor in end_current.neighbors:
-            if neighbor not in end_visited:
-                end_stack.append(neighbor) 
-                if neighbor != start_current:
-                    neighbor.make_open()
-
-        draw()  # Redraw the grid with updated nodes
-
-        if start_current != start:
-            start_current.make_closed()
-        
-        if end_current != end:
-            end_current.make_closed()
-
-    return False
-
 def make_grid(rows, width):
     grid = []
     gap = width // rows     #int division
@@ -415,11 +281,11 @@ def main(WIN, width):
                     elif algo_type == "dfs":
                         dfs.dfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
                     elif algo_type == "bfs":
-                        bfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
+                        bfs.bfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
                     elif algo_type == "bi_bfs":
-                        bidirectional_bfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
+                        bi_bfs.bidirectional_bfs(lambda: draw(WIN, grid, ROWS, width), start, end)
                     elif algo_type == "bi_dfs":
-                        bidirectional_dfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
+                        bi_dfs.bidirectional_dfs(lambda: draw(WIN, grid, ROWS, width), start, end)
                 
                 if event.key == pygame.K_c:
                     start = None
