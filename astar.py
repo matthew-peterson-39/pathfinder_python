@@ -49,7 +49,7 @@ class Node:
         return self.color == TURQUOISE
     
     def reset(self):
-        self.color == WHITE
+        self.color = WHITE
 
     def make_closed(self):
         self.color = RED
@@ -153,8 +153,13 @@ def main(WIN, width):
                 pos = pygame.mouse.get_pos()
                 row, col = get_clicked_pos(pos, ROWS, WIDTH)
                 node = grid[row][col]
-                if node != start and node != end:
-                    node.reset()
+                node.reset()
+
+                if node == start:
+                    start = None
+                elif node == end:
+                    end = None
+                    
     pygame.quit()
 
 main(WIN, WIDTH)
