@@ -1,4 +1,6 @@
+import pygame
 from queue import PriorityQueue
+from algorithms import utilities
 
 """
 STUDY NOTES:
@@ -7,29 +9,13 @@ STUDY NOTES:
     edges having a cost associated with them, thus allowing a retracing back to the start via the
     shortest possible distance.
 
-    Reqs. 
+    - Final thoughts: Dijkstras algorithm at first looks very similar to A*. One big difference I noticed is that
+    Dijkstra's algorithm works off of the g_score and does not account for the f_score function as is the case with 
+    the A* algorithm. One can see that the additional f_score calculations leads to a more optimized seaarch.
 """
-
-def calculate_heuristic(node1, node2):
-    """
-    Method to calculate the Manhattan distance between two points. The Manhattan distance
-    is represented by the absolute difference of Cartesian coordinates (x, y) between the
-    two nodes. This approach restricts movement to the up, down, left, and right directions only.
-    
-    Params:
-    node1 (tuple) - (x1, y1) cartesian coordinates of node1
-    node2 (tuple) - (x2, y2) cartesian coordinates of node2
-    
-    Returns:
-    int: Manhattan distance between node1 and node2.
-    """
-    x1, y1 = node1
-    x2, y2 = node2
-    return abs(x1 - x2) + abs(y1 - y2)
 
 def dijkstras(draw, grid, start, end):
     count = 0
-    
     open_set = PriorityQueue()
     open_set.put((0, count, start))  # count for breaking f-score ties
     
@@ -38,11 +24,35 @@ def dijkstras(draw, grid, start, end):
     # set initial g_score for all nodes
     g_score = {node: float("inf") for row in grid for node in row}  #dictionary comprehension
     g_score[start] = 0
-    
-    # set initial f_score for all nodes
-    f_score = {node: float("inf") for row in grid for node in row}  #dictionary comprehension
-    # calculate f_score using heuristic (manhattan distance) between the start and end node
-    f_score[start] = calculate_heuristic(start.get_pos(), end.get_pos())
 
-    open_set_hash = {start}     # faster open_set look up. 
-    pass
+    open_set_hash = {start}     # faster open_set look up.
+
+    while not open_set.empty():
+        # Enables quit during runtime
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+
+        current = open_set.get()[2]
+        open_set_hash.remove(current)
+
+        if current == end:
+            utilities.visualize_path(previous_node, end, draw)
+            end.make_end()
+            return True
+
+        for neighbor in current.neighbors:
+            temp_g_score = g_score[current] + 1
+            if temp_g_score < g_score[neighbor]:
+                previous_node[neighbor] = current
+                g_score[neighbor] = temp_g_score
+                if neighbor not in open_set_hash:
+                    count += 1
+                    open_set.put((temp_g_score, count, neighbor))
+                    open_set_hash.add(neighbor)
+                    neighbor.make_open()
+        draw()
+        if current != start:
+            current.make_closed()
+    return False
+        
