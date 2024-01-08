@@ -1,5 +1,5 @@
-# Pathfinder Python
-A pygame based pathfinding visualizer where users can design a maze and watch the algorithm work it out.
+# Pathfinding with Python
+A pygame based pathfinding visualizer where users can design a maze and watch the algorithm work it out. The current version implements only one algorithm, A*, but the ability to select and visualize different algorithms will be available soon!
 
 # Implemented Algorithms
 - A-star (A*) - √
