@@ -126,12 +126,33 @@ def visualize_path(previous_node, current, draw):
         draw()
 
 def astar_algo(draw, grid, start, end):
+    """
+    A* search algorithm to find the shortest path from start to end node.
+    
+    A* algorithm is a known search algorithm that combines features of uniform-cost search and pure heuristic search to efficiently 
+    compute optimal paths. The function maintains a priority queue of nodes to explore, along with 
+    a 'g_score' representing the cost from the start node to the current node, and an 'f_score' 
+    that estimates the total cost from start to end going through the current node.
+
+    Params:
+    draw (function): Helper function to update the GUI.
+    grid (list): 2D list representing the nodes in the grid.
+    start (Node): The starting node of the path.
+    end (Node): The ending node of the path.
+
+    Returns:
+    bool: True if a path is found, False otherwise.
+    """
     count = 0
+    
     open_set = PriorityQueue()
     open_set.put((0, count, start))  # count for breaking f-score ties
+    
     previous_node = {}
+    
     g_score = {node: float("inf") for row in grid for node in row}  #dictionary comprehension
     g_score[start] = 0
+    
     f_score = {node: float("inf") for row in grid for node in row}  #dictionary comprehension
     f_score[start] = calculate_heuristic(start.get_pos(), end.get_pos())
 
