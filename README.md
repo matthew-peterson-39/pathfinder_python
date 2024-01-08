@@ -4,7 +4,60 @@ A pygame based pathfinding visualizer where users can design a maze and watch th
 # Implemented Algorithms
 - A-star (A*) - √
 
-# Future Algorithms
-- Dykstras
+# Future Algorithms I want to Explore
+- Bidirectional Search
+- Swarm Algorithm
 
-# How to Use
+# How to Run
+
+### Requirements
+- Python 3
+- Git
+- Virtual Enviornmet (optional)
+
+### Clone Repo
+```bash
+git clone https://github.com/matthew-peterson-39/pathfinder_python 
+```
+
+### Setup Virtual Envionrment
+
+Change directories into cloned repo
+```bash 
+cd pathfinder_python
+```
+
+Create virtual enviornment
+```bash 
+python -m venv .venv
+```
+
+Activate virtual enviornment
+
+Mac :
+```bash
+source .venv/bin/activate
+```
+
+Windows :
+```bash
+source .venv/Scripts/activate
+```
+
+### Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Run
+
+```bash
+python3 pathfinder.py
+```
+
+If the above run command returns an error try the following instead:
+```bash
+python pathfinder.py
+```
+
