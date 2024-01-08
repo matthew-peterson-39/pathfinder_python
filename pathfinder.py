@@ -130,8 +130,8 @@ def astar_algo(draw, grid, start, end):
     """
     A* search algorithm to find the shortest path from start to end node.
     
-    A* algorithm is a known search algorithm that combines features of uniform-cost search and pure heuristic search to efficiently 
-    compute optimal paths. The function maintains a priority queue of nodes to explore, along with 
+    This iterations of the A* algorithm uses a uniform-cost search, where each node's edges have the same weight.
+    It makes use of a heuristic distance funct to compute optimal paths. The function maintains a priority queue of nodes to explore, along with 
     a 'g_score' representing the cost from the start node to the current node, and an 'f_score' 
     that estimates the total cost from start to end going through the current node.
 
@@ -194,6 +194,23 @@ def astar_algo(draw, grid, start, end):
             current.make_closed()
 
 def dfs_algo(draw, start, end):
+   """
+    Implements Depth First Search (DFS) to find a path from a start node to an end node.
+
+    DFS explores as far down a branch as possible before backtracking. This version of DFS 
+    goes to the end of a branch, then backtracks, checking other branches from the visited 
+    nodes. It uses a stack to keep track of which nodes to visit next.
+
+    Params:
+    draw (function): Function to update the GUI.
+    start (Node): The starting point of the search.
+    end (Node): The target node to find.
+
+    Returns:
+    bool: True if a path to the end node is found, False if there's no path.
+    """
+    print(start.y)
+    print(end.y)
     stack = [start]
     visited = set()
 
@@ -219,6 +236,23 @@ def dfs_algo(draw, start, end):
     return False
 
 def bfs_algo(draw, start, end):
+    """
+    Implements the Breadth First Search (BFS) algorithm to find a path from a start 
+    node to an end node.
+
+    BFS works level by level, first checking all neighbors of the start node, then moving
+      to the next level of neighbors if the end node isn't found. It uses a queue to keep 
+      track of which nodes to visit next. The function ends when it either finds the end 
+      node or runs out of nodes to check.
+
+    Params:
+    draw (function): Function to update the GUI.
+    start (Node): The starting point of the search.
+    end (Node): The target node to find.
+
+    Returns:
+    bool: True if a path to the end node is found, False if there's no path.
+    """
     queue = Queue()
     visited = set()
 
