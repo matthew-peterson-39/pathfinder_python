@@ -5,6 +5,7 @@ from algorithms import dfs, bfs, bi_bfs, bi_dfs, dijkstras, astar, utilities
 
 WIDTH = 800
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
+pygame.mouse.set_cursor(*pygame.cursors.arrow)
 pygame.display.set_caption("Pathfinding Visualizer")
 
 BLACK = (96, 96, 96)
