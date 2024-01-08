@@ -1,3 +1,5 @@
+import pygame
+
 def bidirectional_dfs(draw, start, end):
     start_stack = [start]
     start_visited = set()
@@ -7,6 +9,10 @@ def bidirectional_dfs(draw, start, end):
     
 
     while start_stack and end_stack:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                
         start_current = start_stack.pop()
         start_visited.add(start_current)
 
