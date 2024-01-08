@@ -1,5 +1,4 @@
 import pygame
-import math
 from queue import PriorityQueue
 
 WIDTH = 800
@@ -115,10 +114,43 @@ def get_clicked_pos(pos, rows, width):
 
     row = y // gap
     col = x // gap
-    
+
     return row, col
 
 
+def main(WIN, width):
+    ROWS = 50
+    grid = make_grid(ROWS, width)
+    
+    start = None
+    end = None
+    
+    run = True
+    started = False
 
-if __name__ == '__main__':
-    pass
+    while run:
+        draw(WIN, grid, ROWS, width)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            if start:   #ensure the user cannot press inputs when algorithm has started
+                continue
+
+            if pygame.mouse.get_pressed()[0]:   #left mouse button
+                pos = pygame.mouse.get_pos()
+                row, col = get_clicked_pos(pos, ROWS, WIDTH)
+                node = grid[row][col]
+                if not start:
+                    start = node
+                    start.make_start()
+                elif not end:
+                    end = node
+                    end.make_end()
+                elif node != end and node != start:
+                    node.make_wall()
+                
+                elif pygame.mouse.get_pressed[2]:   #right mouse button
+                    pass
+    pygame.quit()
+
+main(WIN, WIDTH)
