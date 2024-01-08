@@ -82,3 +82,34 @@ def heuristic(node1, node2):
     x2, y2 = node2
     return abs(x1 - x2) + abs(y1 - y2)
 
+def make_grid(rows, width):
+    grid = []
+    gap = width // rows     #int division
+    for i in range(rows):
+        grid.append([])
+        for j in range(rows):
+            node = Node(i, j, gap, rows)
+            grid[i].append(node)
+    return grid
+
+def draw_grid(WIN, rows, width):
+    gap = width // rows
+    for i in range(rows):
+        pygame.draw.line(WIN, GREY, (0,i * gap), (width, i * gap))
+        for j in range(rows):
+            pygame.draw.line(WIN, GREY, (j * gap, 0), (j * gap, width)) #flip cords and draw ver
+
+def draw(WIN, grid, rows, width):
+    WIN.fill(WHITE)
+
+    for row in grid:
+        for node in row:
+            node.draw(WIN)
+
+    draw_grid(WIN, rows, width)
+    pygame.display.update()
+
+
+
+if __name__ == '__main__':
+    pass
