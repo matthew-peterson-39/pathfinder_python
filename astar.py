@@ -70,10 +70,21 @@ class Node:
         pygame.draw.rect(WIN, self.color, (self.x, self.y, self.width, self.width))
     
     def update_neighbors(self, grid):
-        pass
+        self.neighbors = []
+        if self.row < self.total_rows - 1 and not grid[self.row+1][self.col].is_wall(): # DOWN
+            self.neighbors.append(grid[self.row+1][self.col])
+        
+        if self.row > 0 and not grid[self.row-1][self.col].is_wall(): # UP
+            self.neighbors.append(grid[self.row-1][self.col])            
+        
+        if self.col < self.total_rows - 1 and not grid[self.row][self.col+1].is_wall(): # RIGHT
+            self.neighbors.append(grid[self.row][self.col+1])
+        
+        if self.col > 0 and not grid[self.row][self.col-1].is_wall(): # LEFT
+            self.neighbors.append(grid[self.row][self.col-1])
 
     # LESS THAN ... if two nodes are compared, the other spot will always be less than
-    def __let__(self, other):
+    def __lt__(self, other):
         return False
     
 def heuristic(node1, node2):
@@ -81,6 +92,16 @@ def heuristic(node1, node2):
     x2, y2 = node2
     return abs(x1 - x2) + abs(y1 - y2)
 
+def astar_algo(draw, grid, start, end):
+    count = 0
+    open_set = PriorityQueue()
+    open_set.put((0, count, start))  # count for breaking f-score ties
+    previous_node = {}
+    g_score = {node: float("inf") for row in grid for spot in row}  #dictionary comprehension
+    g_score[start] = 0
+    f_score = {node: float("inf") for row in grid for spot in row}  #dictionary comprehension
+    f_score[start] = heuristic(start.get_pos(), end.get_pos())
+    
 def make_grid(rows, width):
     grid = []
     gap = width // rows     #int division
@@ -159,7 +180,14 @@ def main(WIN, width):
                     start = None
                 elif node == end:
                     end = None
-                    
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE and not started:
+                    for row in grid:
+                        for node in row:
+                            node.update_neighbors()
+                    astar_algo(lambda: draw(WIN, grid, ROWS, width), grid, start, end)
+
     pygame.quit()
 
 main(WIN, WIDTH)
