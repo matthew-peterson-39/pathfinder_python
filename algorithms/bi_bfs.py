@@ -1,4 +1,5 @@
 from queue import Queue
+import pygame
 
 def bidirectional_bfs(draw, start, end):
 
@@ -17,6 +18,11 @@ def bidirectional_bfs(draw, start, end):
     
 
     while not start_queue.empty() and not end_queue.empty():
+        # Enables quit during runtime
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+        
         current_start = start_queue.get()
         current_end = end_queue.get()
 

@@ -1,3 +1,5 @@
+import pygame
+
 def dfs_algo(draw, start, end):
     """
     Implements Depth First Search (DFS) to find a path from a start node to an end node.
@@ -19,6 +21,10 @@ def dfs_algo(draw, start, end):
     visited = set()
 
     while stack:
+        # Enables quit during runtime
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
         current = stack.pop()
         visited.add(current)
 

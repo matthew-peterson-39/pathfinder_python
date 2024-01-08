@@ -9,10 +9,11 @@ def bidirectional_dfs(draw, start, end):
     
 
     while start_stack and end_stack:
+        # Enables quit during runtime
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                
+
         start_current = start_stack.pop()
         start_visited.add(start_current)
 

@@ -1,4 +1,5 @@
 from queue import Queue
+import pygame
 
 def bfs_algo(draw, start, end):
     """
@@ -25,6 +26,10 @@ def bfs_algo(draw, start, end):
     visited.add(start)
 
     while not queue.empty():
+        # Enables quit during runtime
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
         current = queue.get()
         if current == end:
             #TODO visualize path
