@@ -65,14 +65,20 @@ source .venv/Scripts/activate
 pip install -r requirements.txt
 ```
 
-### Run
+## Run
+
+### algo_type Options:
+
+1. astar
+2. dfs
+3. bfs
 
 ```bash
-python3 pathfinder.py
+python3 pathfinder.py <algo_type>
 ```
 
 If the above run command returns an error try the following instead:
 ```bash
-python pathfinder.py
+python pathfinder.py <algo_type>
 ```
 
