@@ -1,7 +1,7 @@
 import sys
 import pygame
-from queue import PriorityQueue, Queue
-from algorithms import dfs, bfs, bi_bfs, bi_dfs
+from queue import PriorityQueue
+from algorithms import dfs, bfs, bi_bfs, bi_dfs, dijkstras, utilities
 
 WIDTH = 800
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
@@ -108,24 +108,6 @@ def calculate_heuristic(node1, node2):
     x1, y1 = node1
     x2, y2 = node2
     return abs(x1 - x2) + abs(y1 - y2)
-
-def visualize_path(previous_node, current, draw):
-    """
-    Visualize the path from the start node to the current node.
-
-    The previous_node dictionary is used to visualize the shortest path back
-    to the start node. This is visualized through a color change and
-    redrawing of the GUI with the draw() method after each path node is colored.
-    
-    Params:
-    previous_node (dict): A dictionary storing the reference to the previous node for each visited.
-    current (Node): The current node (first iteration is the end node) of the path to be visualized.
-    draw (function): Helper function to update the GUI.
-    """
-    while current in previous_node:
-        current = previous_node[current]
-        current.make_path()
-        draw()
         
 def astar_algo(draw, grid, start, end):
     """
@@ -173,7 +155,7 @@ def astar_algo(draw, grid, start, end):
 
         if current == end:
             # draw path
-            visualize_path(previous_node, end, draw)
+            utilities.visualize_path(previous_node, end, draw)
             end.make_end()
             return True
 
@@ -286,6 +268,8 @@ def main(WIN, width):
                         bi_bfs.bidirectional_bfs(lambda: draw(WIN, grid, ROWS, width), start, end)
                     elif algo_type == "bi_dfs":
                         bi_dfs.bidirectional_dfs(lambda: draw(WIN, grid, ROWS, width), start, end)
+                    elif algo_type == "dijkstras":
+                        dijkstras.dijkstras(lambda: draw(WIN, grid, ROWS, width), grid, start, end)
                 
                 if event.key == pygame.K_c:
                     start = None
