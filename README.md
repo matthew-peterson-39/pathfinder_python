@@ -6,6 +6,7 @@ A pygame based pathfinding visualizer where users can design a maze and watch th
 - DFS
 - BFS
 - Bidirectional BFS
+- Bidirectional DFS
 
 # Future Algorithms I want to Explore
 - Swarm Algorithm
@@ -75,6 +76,7 @@ pip install -r requirements.txt
 2. dfs
 3. bfs
 4. bi_bfs
+5. bi_dfs
 
 ```bash
 python3 pathfinder.py <algo_type>
