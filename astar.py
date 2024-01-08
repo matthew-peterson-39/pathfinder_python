@@ -52,19 +52,19 @@ class Node:
         self.color == WHITE
 
     def make_closed(self):
-        return self.color == RED
+        self.color = RED
     
     def make_open(self):
-        return self.color == GREEN
+        self.color = GREEN
     
     def make_wall(self):
-        return self.color == BLACK
+        self.color = BLACK
 
     def make_start(self):
-        return self.color == ORANGE
+        self.color = ORANGE
     
     def make_end(self):
-        return self.color == TURQUOISE
+        self.color = TURQUOISE
     
     def draw(self, WIN):
         pygame.draw.rect(WIN, self.color, (self.x, self.y, self.width, self.width))
@@ -148,9 +148,9 @@ def main(WIN, width):
                     end.make_end()
                 elif node != end and node != start:
                     node.make_wall()
-                
-                elif pygame.mouse.get_pressed[2]:   #right mouse button
-                    pass
+            
+            elif pygame.mouse.get_pressed()[2]:   #right mouse button
+                pass
     pygame.quit()
 
 main(WIN, WIDTH)
