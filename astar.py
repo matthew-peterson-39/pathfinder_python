@@ -109,6 +109,15 @@ def draw(WIN, grid, rows, width):
     draw_grid(WIN, rows, width)
     pygame.display.update()
 
+def get_clicked_pos(pos, rows, width):
+    gap = width // rows
+    y,x = pos
+
+    row = y // gap
+    col = x // gap
+    
+    return row, col
+
 
 
 if __name__ == '__main__':
