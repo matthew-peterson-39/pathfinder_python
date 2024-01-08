@@ -4,9 +4,17 @@ def bidirectional_bfs(draw, start, end):
 
     # initialize start and end locations
     start_queue = Queue()
+    visited_start = set()
+    
     end_queue = Queue()
-    visited_start = set([start])
-    visited_end = set([end])
+    visited_end = set()
+
+    start_queue.put(start)
+    end_queue.put(end)
+
+    visited_start.add(start)
+    visited_end.add(end)
+    
 
     while not start_queue.empty() and not end_queue.empty():
         current_start = start_queue.get()
@@ -32,10 +40,8 @@ def bidirectional_bfs(draw, start, end):
                 neighbor.make_open()
         
         draw()
-        
+
         if current_start != start:
             current_start.make_closed()
         if current_end != end:
             current_end.make_closed()
-
-        

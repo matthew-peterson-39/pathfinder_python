@@ -415,6 +415,7 @@ def main(WIN, width):
                         bfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
                     elif algo_type == "bi_bfs":
                         bidirectional_bfs(lambda: draw(WIN, grid, ROWS, width), start, end)
+                
                 if event.key == pygame.K_c:
                     start = None
                     end = None
