@@ -74,6 +74,7 @@ pip install -r requirements.txt
 1. astar
 2. dfs
 3. bfs
+4. bi_bfs
 
 ```bash
 python3 pathfinder.py <algo_type>
