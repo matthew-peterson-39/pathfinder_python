@@ -1,7 +1,6 @@
 import sys
 import pygame
-from queue import PriorityQueue
-from algorithms import dfs, bfs, bi_bfs, bi_dfs, dijkstras, astar, utilities
+from algorithms import dfs, bfs, bi_bfs, bi_dfs, dijkstras, astar
 
 WIDTH = 800
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
