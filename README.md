@@ -8,6 +8,17 @@ A pygame based pathfinding visualizer where users can design a maze and watch th
 - Bidirectional Search
 - Swarm Algorithm
 
+# Controls
+### Left-click: 
+>Place start, end, or wall.
+### Right-click: 
+>Reset node at mouse position.
+
+### Keypress C:
+>Reset entire grid.
+### Keypress SPACE:
+>Start search.
+
 # How to Run
 
 ### Requirements
