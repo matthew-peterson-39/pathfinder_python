@@ -125,7 +125,7 @@ def visualize_path(previous_node, current, draw):
         current = previous_node[current]
         current.make_path()
         draw()
-
+        
 def astar_algo(draw, grid, start, end):
     """
     A* search algorithm to find the shortest path from start to end node.
@@ -279,7 +279,7 @@ def bfs_algo(draw, start, end):
     
     return False
 
-def bidirectional_bfs(draw, start, end):
+def bidirectional_bfs_algo(draw, start, end):
 
     # initialize start and end locations
     start_queue = Queue()
@@ -414,7 +414,7 @@ def main(WIN, width):
                     elif algo_type == "bfs":
                         bfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
                     elif algo_type == "bi_bfs":
-                        bidirectional_bfs(lambda: draw(WIN, grid, ROWS, width), start, end)
+                        bidirectional_bfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
                 
                 if event.key == pygame.K_c:
                     start = None
