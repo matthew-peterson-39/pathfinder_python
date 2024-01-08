@@ -91,6 +91,18 @@ class Node:
         return False
     
 def heuristic(node1, node2):
+    """
+    Manhattan distance between two points. Manhattan distance
+    is represented by the abs difference of Cartesian coordinates (x, y).
+    This approach restricts movement to the up, down, left, and right directions only.
+    
+    Params:
+    node1 (tuple) - (x1, y1) cartesian coordinates of node1
+    node2 (tuple) - (x2, y2) cartesian coordinates of node2
+    
+    Returns:
+    int: Manhattan distance between node1 and node2.
+    """
     x1, y1 = node1
     x2, y2 = node2
     return abs(x1 - x2) + abs(y1 - y2)
