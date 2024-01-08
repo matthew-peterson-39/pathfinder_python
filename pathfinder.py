@@ -200,6 +200,12 @@ def dfs_algo(draw, start, end):
     while stack:
         current = stack.pop()
         visited.add(current)
+
+        if current == end:
+            # Found the end node, perform necessary actions
+            # like reconstructing the path and visualizing it.
+            return True
+        
         for neighbor in current.neighbors:
             if neighbor not in visited:
                 stack.append(neighbor)
@@ -318,9 +324,12 @@ def main(WIN, width):
                     for row in grid:
                         for node in row:
                             node.update_neighbors(grid)
-                    # astar_algo(lambda: draw(WIN, grid, ROWS, width), grid, start, end)
-                    # dfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
-                    bfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
+                    if algo_type == "astar":
+                        astar_algo(lambda: draw(WIN, grid, ROWS, width), grid, start, end)
+                    elif algo_type == "dfs":
+                        dfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
+                    elif algo_type == "bfs":
+                        bfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
                 if event.key == pygame.K_c:
                     start = None
                     end = None
