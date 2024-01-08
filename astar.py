@@ -133,24 +133,28 @@ def main(WIN, width):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-            if start:   #ensure the user cannot press inputs when algorithm has started
-                continue
+            # if start:   #ensure the user cannot press inputs when algorithm has started
+            #     continue
 
             if pygame.mouse.get_pressed()[0]:   #left mouse button
                 pos = pygame.mouse.get_pos()
                 row, col = get_clicked_pos(pos, ROWS, WIDTH)
                 node = grid[row][col]
-                if not start:
+                if not start and node != end:
                     start = node
                     start.make_start()
-                elif not end:
+                elif not end and node!= start:
                     end = node
                     end.make_end()
                 elif node != end and node != start:
                     node.make_wall()
             
             elif pygame.mouse.get_pressed()[2]:   #right mouse button
-                pass
+                pos = pygame.mouse.get_pos()
+                row, col = get_clicked_pos(pos, ROWS, WIDTH)
+                node = grid[row][col]
+                if node != start and node != end:
+                    node.reset()
     pygame.quit()
 
 main(WIN, WIDTH)
