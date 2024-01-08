@@ -5,9 +5,9 @@ A pygame based pathfinding visualizer where users can design a maze and watch th
 - A*
 - DFS
 - BFS
+- Bidirectional BFS
 
 # Future Algorithms I want to Explore
-- Bidirectional Search
 - Swarm Algorithm
 
 # Controls
