@@ -3,7 +3,7 @@ from queue import PriorityQueue
 
 WIDTH = 800
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
-pygame.display.set_caption("A* Visualizer")
+pygame.display.set_caption("Pathfinding Visualizer")
 
 BLACK = (0,0,0)
 WHITE = (255,255,255)
@@ -90,11 +90,11 @@ class Node:
     def __lt__(self, other):
         return False
     
-def heuristic(node1, node2):
+def calculate_heuristic(node1, node2):
     """
-    Manhattan distance between two points. Manhattan distance
-    is represented by the abs difference of Cartesian coordinates (x, y).
-    This approach restricts movement to the up, down, left, and right directions only.
+    Method to calculate the Manhattan distance between two points. The Manhattan distance
+    is represented by the absolute difference of Cartesian coordinates (x, y) between the
+    two nodes. This approach restricts movement to the up, down, left, and right directions only.
     
     Params:
     node1 (tuple) - (x1, y1) cartesian coordinates of node1
@@ -121,7 +121,7 @@ def astar_algo(draw, grid, start, end):
     g_score = {node: float("inf") for row in grid for node in row}  #dictionary comprehension
     g_score[start] = 0
     f_score = {node: float("inf") for row in grid for node in row}  #dictionary comprehension
-    f_score[start] = heuristic(start.get_pos(), end.get_pos())
+    f_score[start] = calculate_heuristic(start.get_pos(), end.get_pos())
 
     open_set_hash = {start}
 
@@ -145,7 +145,7 @@ def astar_algo(draw, grid, start, end):
             if temp_g_score < g_score[neighbor]:
                 previous_node[neighbor] = current
                 g_score[neighbor] = temp_g_score
-                f_score[neighbor] = temp_g_score + heuristic(neighbor.get_pos(), end.get_pos())
+                f_score[neighbor] = temp_g_score + calculate_heuristic(neighbor.get_pos(), end.get_pos())
                 if neighbor not in open_set_hash:
                     count += 1
                     open_set.put((f_score[neighbor], count, neighbor))
