@@ -7,16 +7,16 @@ WIDTH = 800
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
 pygame.display.set_caption("Pathfinding Visualizer")
 
-BLACK = (0,0,0)
-WHITE = (255,255,255)
-RED = (255,0,0)
-GREEN = (0,255,0)
-BLUE = (0,0,255)
-YELLOW = (255,255,0)
-ORANGE = (255,165,0)
-GREY = (128,128,128)
-TURQUOISE = (64,224,208)
-PURPLE = (128,0,128)
+BLACK = (96, 96, 96)
+WHITE = (255, 255, 255)
+RED = (255, 102, 102)
+GREEN = (102, 255, 102)
+BLUE = (102, 102, 255)
+YELLOW = (255, 255, 102)
+ORANGE = (255, 178, 102)
+GREY = (160, 160, 160)
+TURQUOISE = (102, 208, 204)
+PURPLE = (204, 102, 255)
 
 class Node:
     def __init__(self, row, col, width, total_rows):
@@ -42,13 +42,13 @@ class Node:
         return self.color == BLACK
 
     def is_start(self):
-        return self.color == ORANGE
+        return self.color == PURPLE
     
     def is_path(self):
         return self.color == BLUE
 
     def is_end(self):
-        return self.color == YELLOW
+        return self.color == ORANGE
     
     def reset(self):
         self.color = WHITE
