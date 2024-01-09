@@ -12,22 +12,11 @@ A pygame based pathfinding visualizer where users can design a maze and watch th
 # Future Algorithms I want to Explore
 - Swarm Algorithm
 
-# Controls
-### Left-click: 
->Place start, end, or wall.
-### Right-click: 
->Reset node at mouse position.
-
-### Keypress C:
->Reset entire grid.
-### Keypress SPACE:
->Start search.
-
-# How to Run
-
 ## NOTICE:
 WSL users who's version of windows is < X11 may experience difficulties running the program.
 Vist https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps for additional details.
+
+# How to Run
 
 ## Requirements
 - Python 3
@@ -89,3 +78,13 @@ If the above run command returns an error try the following instead:
 python pathfinder.py <algo_type>
 ```
 
+# Controls
+### Left-click: 
+>Place start, end, or wall.
+### Right-click: 
+>Reset node at mouse position.
+
+### Keypress C:
+>Reset entire grid.
+### Keypress SPACE:
+>Start search.
