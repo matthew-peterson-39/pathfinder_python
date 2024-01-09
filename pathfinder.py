@@ -6,7 +6,7 @@ from algorithms import dfs, bfs, bi_bfs, bi_dfs, dijkstras, astar
 WIDTH = 800
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
 pygame.mouse.set_cursor(*pygame.cursors.arrow)
-pygame.display.set_caption("Pathfinding Visualizer")
+pygame.display.set_caption("Pathfinding & Search Algorithm Visualizer")
  
 def make_grid(rows, width):
     grid = []
