@@ -31,6 +31,11 @@ def bidirectional_bfs(draw, start, end):
             current_start in visited_end or \
             current_end in visited_start:
             
+            if current_start in visited_end:
+                current_start.make_closed()
+            if current_end in visited_start:
+                current_end.make_closed()
+
             return True
             
         for neighbor in current_start.neighbors:
@@ -46,7 +51,7 @@ def bidirectional_bfs(draw, start, end):
                 neighbor.make_open()
         
         draw()
-
+        
         if current_start != start:
             current_start.make_closed()
         if current_end != end:
