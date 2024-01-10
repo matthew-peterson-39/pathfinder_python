@@ -38,16 +38,18 @@ def bubble_sort(arr):
     while swapped:
         swapped = False
         for i in range(0, lines-1):
-            arr[i].set_color((0,255,0))
-            arr[i+1].set_color((0,255,0))
-            
-            if arr[i].height > arr[i+1].height:
+            arr[i].set_color((0,0,255))
+            draw_array(arr)
+            pygame.time.delay(100)
+            if arr[i].height < arr[i+1].height:
+                arr[i].set_color((255,0,0))
+                arr[i+1].set_color((0,255,0))
+
                 swapped = True
                 temp = arr[i]
                 arr[i] = arr[i + 1]
                 arr[i + 1] = temp
-                pygame.time.delay(50)
-            draw_array(arr)
+
 
     if not swapped:
         pass

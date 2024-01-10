@@ -3,12 +3,13 @@ import pygame
 import Node
 from algorithms import dfs, bfs, bi_bfs, bi_dfs, dijkstras, astar
 
+ROWS = 50
 WIDTH = 800
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
 pygame.mouse.set_cursor(*pygame.cursors.arrow)
 pygame.display.set_caption("Pathfinding & Search Algorithm Visualizer")
- 
-def make_grid(rows, width):
+
+def initialize_grid(rows, width):
     grid = []
     gap = width // rows     #int division
     for x in range(rows):
@@ -18,19 +19,19 @@ def make_grid(rows, width):
             grid[x].append(node)
     return grid
 
-def draw_grid(WIN, rows, width):
+def draw_node_borders(WIN, rows, width):
     gap = width // rows
     for i in range(rows):
         pygame.draw.line(WIN, Node.GREY, (0, i * gap), (width, i * gap))
         for j in range(rows):
             pygame.draw.line(WIN, Node.GREY, (j * gap, 0), (j * gap, width)) #flip cords and draw vert borders
 
-def draw(WIN, grid, rows, width):
+def draw_board(WIN, grid, rows, width):
     WIN.fill(Node.WHITE)
     for row in grid:
         for node in row:
             node.draw(WIN)
-    draw_grid(WIN, rows, width)
+    draw_node_borders(WIN, rows, width)
     pygame.display.update()
 
 def get_clicked_pos(pos, rows, width):
@@ -43,10 +44,8 @@ def get_clicked_pos(pos, rows, width):
     return row, col
 
 def main(WIN, width):
-    ROWS = 50
-    
     algo_type = sys.argv[1] if len(sys.argv) > 1 else "astar" # default astar
-    grid = make_grid(ROWS, width)
+    grid = initialize_grid(ROWS, width)
     
     start = None
     end = None
@@ -55,7 +54,7 @@ def main(WIN, width):
     started = False
 
     while run:
-        draw(WIN, grid, ROWS, width)
+        draw_board(WIN, grid, ROWS, width)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -90,22 +89,22 @@ def main(WIN, width):
                         for node in row:
                             node.update_neighbors(grid)
                     if algo_type == "astar":
-                        astar.astar_algo(lambda: draw(WIN, grid, ROWS, width), grid, start, end)
+                        astar.astar_algo(lambda: draw_board(WIN, grid, ROWS, width), grid, start, end)
                     elif algo_type == "dfs":
-                        dfs.dfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
+                        dfs.dfs_algo(lambda: draw_board(WIN, grid, ROWS, width), start, end)
                     elif algo_type == "bfs":
-                        bfs.bfs_algo(lambda: draw(WIN, grid, ROWS, width), start, end)
+                        bfs.bfs_algo(lambda: draw_board(WIN, grid, ROWS, width), start, end)
                     elif algo_type == "bi_bfs":
-                        bi_bfs.bidirectional_bfs(lambda: draw(WIN, grid, ROWS, width), start, end)
+                        bi_bfs.bidirectional_bfs(lambda: draw_board(WIN, grid, ROWS, width), start, end)
                     elif algo_type == "bi_dfs":
-                        bi_dfs.bidirectional_dfs(lambda: draw(WIN, grid, ROWS, width), start, end)
+                        bi_dfs.bidirectional_dfs(lambda: draw_board(WIN, grid, ROWS, width), start, end)
                     elif algo_type == "dijkstras":
-                        dijkstras.dijkstras(lambda: draw(WIN, grid, ROWS, width), grid, start, end)
+                        dijkstras.dijkstras(lambda: draw_board(WIN, grid, ROWS, width), grid, start, end)
                 
                 if event.key == pygame.K_c:
                     start = None
                     end = None
-                    grid = make_grid(ROWS, width)
+                    grid = initialize_grid(ROWS, width)
     pygame.quit()
 
 main(WIN, WIDTH)

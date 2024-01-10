@@ -62,7 +62,7 @@ class Node:
         self.color = ORANGE
     
     def make_end(self):
-        self.color = YELLOW
+        self.color = PURPLE
     
     def draw(self, WIN):
         pygame.draw.rect(WIN, self.color, (self.x, self.y, self.width, self.width))
@@ -81,6 +81,6 @@ class Node:
         if self.col > 0 and not grid[self.row][self.col-1].is_wall(): # LEFT
             self.neighbors.append(grid[self.row][self.col-1])
 
-    # LESS THAN ... if two nodes are compared, the other spot will always be less than
-    def __lt__(self, other):
-        return False
+    # # LESS THAN ... if two nodes are compared, the other spot will always be less than
+    # def __lt__(self, other):
+    #     return False

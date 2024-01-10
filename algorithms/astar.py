@@ -17,6 +17,7 @@ def calculate_heuristic(node1, node2):
     """
     x1, y1 = node1
     x2, y2 = node2
+
     return abs(x1 - x2) + abs(y1 - y2)
 
 def astar_algo(draw, grid, start, end):
@@ -83,6 +84,8 @@ def astar_algo(draw, grid, start, end):
                     neighbor.make_open()
         
         draw()
+        
         if current != start:
             current.make_closed()
+            
     return False
