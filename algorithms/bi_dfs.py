@@ -23,7 +23,6 @@ def bidirectional_dfs(draw, start, end):
         if start_current == end_current or \
             start_current in end_stack or \
             end_current in start_stack:
-            #TODO visualize path
             return True
         
         for neighbor in start_current.neighbors:
