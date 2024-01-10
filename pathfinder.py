@@ -11,33 +11,31 @@ pygame.display.set_caption("Pathfinding & Search Algorithm Visualizer")
 def make_grid(rows, width):
     grid = []
     gap = width // rows     #int division
-    for i in range(rows):
+    for x in range(rows):
         grid.append([])
-        for j in range(rows):
-            node = Node.Node(i, j, gap, rows)
-            grid[i].append(node)
+        for y in range(rows):
+            node = Node.Node(x, y, gap, rows)
+            grid[x].append(node)
     return grid
 
 def draw_grid(WIN, rows, width):
     gap = width // rows
     for i in range(rows):
-        pygame.draw.line(WIN, Node.GREY, (0,i * gap), (width, i * gap))
+        pygame.draw.line(WIN, Node.GREY, (0, i * gap), (width, i * gap))
         for j in range(rows):
             pygame.draw.line(WIN, Node.GREY, (j * gap, 0), (j * gap, width)) #flip cords and draw vert borders
 
 def draw(WIN, grid, rows, width):
     WIN.fill(Node.WHITE)
-
     for row in grid:
         for node in row:
             node.draw(WIN)
-
     draw_grid(WIN, rows, width)
     pygame.display.update()
 
 def get_clicked_pos(pos, rows, width):
     gap = width // rows
-    y,x = pos
+    y, x = pos
 
     row = y // gap
     col = x // gap
@@ -45,8 +43,9 @@ def get_clicked_pos(pos, rows, width):
     return row, col
 
 def main(WIN, width):
-    algo_type = sys.argv[1] if len(sys.argv) > 1 else "astar" # default astar
     ROWS = 50
+    
+    algo_type = sys.argv[1] if len(sys.argv) > 1 else "astar" # default astar
     grid = make_grid(ROWS, width)
     
     start = None

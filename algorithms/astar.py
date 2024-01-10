@@ -38,7 +38,6 @@ def astar_algo(draw, grid, start, end):
     bool: True if a path is found, False otherwise.
     """
     count = 0
-    
     open_set = PriorityQueue()
     open_set.put((0, count, start))  # count for breaking f-score ties
     
@@ -70,9 +69,9 @@ def astar_algo(draw, grid, start, end):
             start.make_start()
             return True
 
+        #get neighbors of current node
         for neighbor in current.neighbors:
             temp_g_score = g_score[current] + 1
-            
             if temp_g_score < g_score[neighbor]:
                 previous_node[neighbor] = current
                 g_score[neighbor] = temp_g_score
@@ -82,7 +81,8 @@ def astar_algo(draw, grid, start, end):
                     open_set.put((f_score[neighbor], count, neighbor))
                     open_set_hash.add(neighbor)
                     neighbor.make_open()
+        
         draw()
-
         if current != start:
             current.make_closed()
+    return False

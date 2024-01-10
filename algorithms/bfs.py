@@ -31,8 +31,8 @@ def bfs_algo(draw, start, end):
             if event.type == pygame.QUIT:
                 pygame.quit()
         current = queue.get()
+        
         if current == end:
-            #TODO visualize path
             return True
         
         for neighbor in current.neighbors:
@@ -41,10 +41,12 @@ def bfs_algo(draw, start, end):
                     neighbor.make_open()
                 visited.add(neighbor)
                 queue.put(neighbor)
-                neighbor.previous_node = current
             
         draw()
 
+        if current == end:
+            return True
+        
         if current != start:
             current.make_closed()
     

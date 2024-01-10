@@ -23,7 +23,6 @@ def draw_array():
         line.draw(WIN)
 
 def bubble_sort(arr):
-    sorted = []
     lines = len(arr)
     for i in range(lines):
         swapped = False
@@ -43,6 +42,5 @@ while running:
     
     WIN.fill((0,0,0))
     draw_array()
-    bubble_sort(arr)
     pygame.display.flip()
 

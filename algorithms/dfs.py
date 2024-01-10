@@ -29,7 +29,6 @@ def dfs_algo(draw, start, end):
         visited.add(current)
 
         if current == end:
-            #TODO visualize path
             return True
         
         for neighbor in current.neighbors:
@@ -38,9 +37,11 @@ def dfs_algo(draw, start, end):
                 if neighbor != end:
                     neighbor.make_open()
 
-        draw()  # Redraw the grid with updated nodes
+        draw()
 
+        if current == end:
+            return True
         if current != start:
-            current.make_closed()  # Mark the current node as visited/closed in visualization
+            current.make_closed()
 
     return False
