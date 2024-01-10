@@ -24,8 +24,8 @@ def astar_algo(draw, grid, start, end):
     A* search algorithm to find the shortest path from start to end node.
     
     This iterations of the A* algorithm uses a uniform-cost search, where each node's edges have the same weight.
-    It makes use of a heuristic distance funct to compute optimal paths. The function maintains a priority queue of nodes to explore, along with 
-    a 'g_score' representing the cost from the start node to the current node, and an 'f_score' 
+    It makes use of a heuristic distance funct to compute optimal paths. The function maintains a priority 
+    queue of nodes to explore, along with a 'g_score' representing the cost from the start node to the current node, and an 'f_score' 
     that estimates the total cost from start to end going through the current node.
 
     Params:
@@ -60,13 +60,14 @@ def astar_algo(draw, grid, start, end):
             if event.type == pygame.QUIT:
                 pygame.quit()
         
-        current = open_set.get()[2]
+        current = open_set.get()[2] # Node obj
         open_set_hash.remove(current)
 
         if current == end:
             # draw path
             utilities.visualize_path(previous_node, end, draw)
             end.make_end()
+            start.make_start()
             return True
 
         for neighbor in current.neighbors:
